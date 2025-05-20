@@ -1,8 +1,8 @@
-// /utils/recordsFunctions.js
+// /utils/recipesFunctions.js
 
-export const getRecords = async () => {
+export const getRecipes = async () => {
     try {
-        const response = await fetch("/api/records", {
+        const response = await fetch("/api/recipes", {
             method: "GET",
         });
     
@@ -18,9 +18,9 @@ export const getRecords = async () => {
     }
 }
 
-export const getRecordById = async (id) => {
+export const getRecipeById = async (id) => {
     try {
-        const response = await fetch(`/api/records?id=${id}`, {
+        const response = await fetch(`/api/recipes?id=${id}`, {
             method: "GET",
         });
     
@@ -40,7 +40,7 @@ export const createRecord = async (record) => {
     try {
         delete record._id;
 
-        const response = await fetch("/api/records", {
+        const response = await fetch("/api/recipes", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -62,7 +62,7 @@ export const createRecord = async (record) => {
 
 export const updateRecord = async (record) => {
     try {
-        const response = await fetch("/api/records", {
+        const response = await fetch("/api/recipes", {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
@@ -84,7 +84,7 @@ export const updateRecord = async (record) => {
 
 export const deleteRecord = async (id) => {
     try {
-        const response = await fetch(`/api/records?id=${id}`, {
+        const response = await fetch(`/api/recipes?id=${id}`, {
             method: "DELETE",
         });
 

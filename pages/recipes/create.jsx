@@ -1,8 +1,8 @@
 // /pages/records/create.jsx
 
-import RecordForm from "@/components/RecordForm";
+import RecordForm from "@/components/RecipeForm";
 import { recordDefaultValues } from "@/utils/constants";
-import { createRecord } from "@/utils/recordsFunctions";
+import { createRecord } from "@/utils/recipesFunctions";
 import { useRouter } from "next/router";
 
 const Create = () => {

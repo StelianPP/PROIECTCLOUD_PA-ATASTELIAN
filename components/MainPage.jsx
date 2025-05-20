@@ -1,71 +1,80 @@
-// /components/MainPage.jsx
-
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { deleteRecord, getRecords } from "@/utils/recordsFunctions";
+import { deleteRecord as deleteRecipe, getRecipes } from "@/utils/recipesFunctions";
 
 const MainPage = () => {
   const router = useRouter();
-  const [records, setRecords] = useState([]);
+  const [recipes, setRecipes] = useState([]);
 
-  const fetchRecords = async () => {
+  const fetchRecipes = async () => {
     try {
-      const response = await getRecords();
-
-      setRecords(response);
+      const response = await getRecipes();
+      setRecipes(response);
     } catch (error) {
       console.error(error);
     }
   };
 
-  const handleDeleteRecord = async (id) => {
+  const handleDeleteRecipe = async (id) => {
     try {
-      const response = await deleteRecord(id);
-
+      const response = await deleteRecipe(id);
       if (response.deletedCount === 1) {
-        const newRecords = records.filter((record) => record._id !== id);
-        setRecords(newRecords);
+        const newRecipes = recipes.filter((recipe) => recipe._id !== id);
+        setRecipes(newRecipes);
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   };
 
-  const handleUpdateRecord = (id) => {
-    router.push(`/records/edit?id=${id}`);
+  const handleUpdateRecipe = (id) => {
+    router.push(`/recipes/edit?id=${id}`);
   };
 
   useEffect(() => {
-    fetchRecords();
+    fetchRecipes();
   }, []);
 
   return (
     <div className="p-4 flex flex-wrap gap-4">
-      {records.map((record) => (
+      {recipes.map((recipe) => (
         <div
           className="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
-          key={record._id}
+          key={recipe._id}
         >
+          {recipe.imageUrl && (
+            <img
+              src={recipe.imageUrl}
+              alt={recipe.name}
+              className="w-full h-40 object-cover rounded-lg mb-2"
+            />
+          )}
           <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-            {record.title}
+            {recipe.name}
           </h5>
-          <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
-            {record.description}
+          <p className="text-sm text-gray-600 mb-1">
+            <strong>Ingrediente:</strong> {recipe.ingredients.join(", ")}
+          </p>
+          <p className="text-sm text-gray-600 mb-1">
+            <strong>Durată:</strong> {recipe.duration} min
+          </p>
+          <p className="text-sm text-gray-600 mb-3">
+            <strong>Calorii:</strong> {recipe.calories} kcal
           </p>
           <div className="flex justify-center">
             <button
               type="button"
-              className="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
-              onClick={() => handleUpdateRecord(record._id)}
+              className="text-white bg-green-500 hover:bg-green-600 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2"
+              onClick={() => handleUpdateRecipe(recipe._id)}
             >
-              Update
+              Editează
             </button>
             <button
               type="button"
-              className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
-              onClick={() => handleDeleteRecord(record._id)}
+              className="text-white bg-red-500 hover:bg-red-600 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2"
+              onClick={() => handleDeleteRecipe(recipe._id)}
             >
-              Delete
+              Șterge
             </button>
           </div>
         </div>

@@ -4,8 +4,8 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Spinner from "@/components/Spinner";
 import { recordDefaultValues } from "@/utils/constants";
-import { getRecordById, updateRecord } from "@/utils/recordsFunctions";
-import RecordForm from "@/components/RecordForm";
+import { getRecordById, updateRecord } from "@/utils/recipesFunctions";
+import RecordForm from "@/components/RecipeForm";
 
 const Edit = () => {
   const router = useRouter();
