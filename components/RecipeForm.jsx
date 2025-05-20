@@ -1,29 +1,25 @@
-// /components/RecipeForm.jsx
-
 import React, { useState } from "react";
 import { useRouter } from "next/router";
 
 const RecipeForm = (props) => {
   const { data, onSubmit } = props;
   const router = useRouter();
-  
-  // Dacă data nu e definită, setăm un obiect gol cu proprietăți default
-  const [recipe, setRecipe] = useState(data || {
-    name: "",
-    ingredients: [],
-    duration: "",
-    calories: "",
-    imageUrl: "",
-  });
+
+  const [recipe, setRecipe] = useState(
+    data || {
+      name: "",
+      ingredients: [],
+      duration: "",
+      calories: "",
+    }
+  );
 
   const updateRecipe = (field, value) => {
     setRecipe({ ...recipe, [field]: value });
   };
 
-  // Pentru ingrediente vrem să le introducem ca text și să le spargem în array
   const handleIngredientsChange = (e) => {
     const value = e.target.value;
-    // spargem ingredientele după virgulă și eliminăm spațiile
     const ingredientsArray = value.split(",").map((i) => i.trim());
     updateRecipe("ingredients", ingredientsArray);
   };
@@ -33,10 +29,17 @@ const RecipeForm = (props) => {
   };
 
   return (
-    <div className="flex justify-center p-4">
-      <div className="border p-4 rounded-md shadow-sm flex flex-col gap-4 w-full max-w-80">
+    <div className="flex justify-center p-6 bg-gradient-to-r from-pink-100 via-purple-100 to-blue-100 min-h-screen">
+      <div className="bg-white rounded-xl shadow-xl p-8 max-w-lg w-full flex flex-col gap-6">
+        <h2 className="text-3xl font-extrabold text-gray-800 mb-4 text-center">
+          {recipe._id ? "Editează Rețeta" : "Creează o Rețetă Nouă"}
+        </h2>
+
         <div>
-          <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+          <label
+            htmlFor="name"
+            className="block mb-1 font-semibold text-gray-800 text-lg"
+          >
             Nume Rețetă
           </label>
           <input
@@ -44,27 +47,35 @@ const RecipeForm = (props) => {
             id="name"
             value={recipe.name}
             onChange={(e) => updateRecipe("name", e.target.value)}
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder="Nume rețetă"
             required
+            className="w-full px-4 py-2 text-gray-900 placeholder-gray-500 text-base border-2 border-purple-400 rounded-lg focus:outline-none focus:ring-4 focus:ring-purple-300 transition"
           />
         </div>
+
         <div>
-          <label htmlFor="ingredients" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+          <label
+            htmlFor="ingredients"
+            className="block mb-1 font-semibold text-gray-800 text-lg"
+          >
             Ingrediente (separate prin virgulă)
           </label>
           <input
             type="text"
             id="ingredients"
-            value={recipe.ingredients.join(", ")}
+            value={Array.isArray(recipe.ingredients) ? recipe.ingredients.join(", ") : ""}
             onChange={handleIngredientsChange}
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder="ex: ouă, făină, zahăr"
             required
+            className="w-full px-4 py-2 text-gray-900 placeholder-gray-500 text-base border-2 border-purple-400 rounded-lg focus:outline-none focus:ring-4 focus:ring-purple-300 transition"
           />
         </div>
+
         <div>
-          <label htmlFor="duration" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+          <label
+            htmlFor="duration"
+            className="block mb-1 font-semibold text-gray-800 text-lg"
+          >
             Durată (minute)
           </label>
           <input
@@ -72,13 +83,18 @@ const RecipeForm = (props) => {
             id="duration"
             value={recipe.duration}
             onChange={(e) => updateRecipe("duration", e.target.value)}
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder="Durată preparare"
             required
+            min={0}
+            className="w-full px-4 py-2 text-gray-900 placeholder-gray-500 text-base border-2 border-purple-400 rounded-lg focus:outline-none focus:ring-4 focus:ring-purple-300 transition"
           />
         </div>
+
         <div>
-          <label htmlFor="calories" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+          <label
+            htmlFor="calories"
+            className="block mb-1 font-semibold text-gray-800 text-lg"
+          >
             Calorii (kcal)
           </label>
           <input
@@ -86,36 +102,25 @@ const RecipeForm = (props) => {
             id="calories"
             value={recipe.calories}
             onChange={(e) => updateRecipe("calories", e.target.value)}
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder="Calorii"
             required
+            min={0}
+            className="w-full px-4 py-2 text-gray-900 placeholder-gray-500 text-base border-2 border-purple-400 rounded-lg focus:outline-none focus:ring-4 focus:ring-purple-300 transition"
           />
         </div>
-        <div>
-          <label htmlFor="imageUrl" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-            URL Imagine
-          </label>
-          <input
-            type="text"
-            id="imageUrl"
-            value={recipe.imageUrl}
-            onChange={(e) => updateRecipe("imageUrl", e.target.value)}
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder="URL imagine rețetă"
-          />
-        </div>
-        <div className="w-full flex justify-center gap-4">
+
+        <div className="flex justify-center gap-6 mt-6">
           <button
             type="button"
             onClick={handleCancel}
-            className="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
+            className="px-6 py-3 bg-red-600 text-white rounded-lg font-semibold hover:bg-red-700 transition shadow-md"
           >
             Anulează
           </button>
           <button
             type="button"
             onClick={() => onSubmit(recipe)}
-            className="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+            className="px-6 py-3 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-700 transition shadow-md"
           >
             {recipe._id ? "Actualizează" : "Creează"}
           </button>

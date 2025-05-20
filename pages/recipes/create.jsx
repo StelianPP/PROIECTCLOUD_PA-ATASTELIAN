@@ -1,26 +1,26 @@
 // /pages/records/create.jsx
 
-import RecordForm from "@/components/RecipeForm";
-import { recordDefaultValues } from "@/utils/constants";
-import { createRecord } from "@/utils/recipesFunctions";
+import RecipeForm from "@/components/RecipeForm";
+import { recipeDefaultValues } from "@/utils/constants";
+import { createRecipe } from "@/utils/recipesFunctions";
 import { useRouter } from "next/router";
 
 const Create = () => {
   const router = useRouter();
-  const entry = recordDefaultValues;
+  const entry = recipeDefaultValues;
 
   const onSubmit = async (data) => {
-    const response = await createRecord(data);
+    const response = await createRecipe(data);
 
     if (response) {
       router.push("/");
     } else {
-      alert("Failed to create record");
+      alert("Failed to create recipe");
     }
   }
 
   return (
-      <RecordForm data={entry} onSubmit={onSubmit} />
+      <RecipeForm data={entry} onSubmit={onSubmit} />
   );
 };
 

@@ -1,6 +1,6 @@
 // /utils/constants.js
 
-export const recordDefaultValues = {
+export const recipeDefaultValues = {
     _id: "",
     title: "",
     description: ""

@@ -1,19 +1,19 @@
-// /pages/records/edit.jsx
+// /pages/recipes/edit.jsx
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Spinner from "@/components/Spinner";
-import { recordDefaultValues } from "@/utils/constants";
-import { getRecordById, updateRecord } from "@/utils/recipesFunctions";
-import RecordForm from "@/components/RecipeForm";
+import { recipeDefaultValues } from "@/utils/constants";
+import { getRecipeById, updateRecipe } from "@/utils/recipesFunctions";
+import RecipeForm from "@/components/RecipeForm";
 
 const Edit = () => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
-  const [entry, setEntry] = useState(recordDefaultValues);
+  const [entry, setEntry] = useState(recipeDefaultValues);
 
-  const getRecord = async (id) => {
-    const data = await getRecordById(id);
+  const getRecipe = async (id) => {
+    const data = await getRecipeById(id);
 
     if (data) {
       setEntry(data);
@@ -23,12 +23,12 @@ const Edit = () => {
   };
 
   const onSubmit = async (data) => {
-    const response = await updateRecord(data);
+    const response = await updateRecipe(data);
 
     if (response) {
       router.push("/");
     } else {
-      alert("Failed to update record");
+      alert("Failed to update recipe");
     }
   }
 
@@ -40,7 +40,7 @@ const Edit = () => {
       router.push("/");
     }
 
-    getRecord(id);
+    getRecipe(id);
   }, []);
 
   if (isLoading) {
@@ -50,9 +50,9 @@ const Edit = () => {
   return (
     <>
       {entry._id ? (
-        <RecordForm data={entry} onSubmit={onSubmit}/>
+        <RecipeForm data={entry} onSubmit={onSubmit}/>
       ) : (
-        <div className="text-center">Record not found</div>
+        <div className="text-center">Recipe not found</div>
       )}
     </>
   );

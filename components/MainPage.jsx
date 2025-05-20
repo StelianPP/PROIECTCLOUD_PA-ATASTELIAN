@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { deleteRecord as deleteRecipe, getRecipes } from "@/utils/recipesFunctions";
+import { deleteRecipe, getRecipes } from "@/utils/recipesFunctions";
 
 const MainPage = () => {
   const router = useRouter();
@@ -36,51 +36,63 @@ const MainPage = () => {
   }, []);
 
   return (
-    <div className="p-4 flex flex-wrap gap-4">
-      {recipes.map((recipe) => (
-        <div
-          className="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
-          key={recipe._id}
-        >
-          {recipe.imageUrl && (
-            <img
-              src={recipe.imageUrl}
-              alt={recipe.name}
-              className="w-full h-40 object-cover rounded-lg mb-2"
-            />
-          )}
-          <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-            {recipe.name}
-          </h5>
-          <p className="text-sm text-gray-600 mb-1">
-            <strong>Ingrediente:</strong> {recipe.ingredients.join(", ")}
-          </p>
-          <p className="text-sm text-gray-600 mb-1">
-            <strong>Durată:</strong> {recipe.duration} min
-          </p>
-          <p className="text-sm text-gray-600 mb-3">
-            <strong>Calorii:</strong> {recipe.calories} kcal
-          </p>
-          <div className="flex justify-center">
-            <button
-              type="button"
-              className="text-white bg-green-500 hover:bg-green-600 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2"
-              onClick={() => handleUpdateRecipe(recipe._id)}
-            >
-              Editează
-            </button>
-            <button
-              type="button"
-              className="text-white bg-red-500 hover:bg-red-600 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2"
-              onClick={() => handleDeleteRecipe(recipe._id)}
-            >
-              Șterge
-            </button>
+  <div className="min-h-screen bg-gradient-to-br from-lime-50 to-emerald-100 dark:from-gray-900 dark:to-gray-800 p-6">
+    <h1 className="text-4xl font-bold text-center text-emerald-700 dark:text-lime-400 mb-10">
+      🥗 NutriNote – Gătește cu grijă, trăiește cu gust!
+    </h1>
+
+    {recipes.length === 0 ? (
+      <p className="text-center text-gray-500 dark:text-gray-400">
+        Nu ai adăugat încă nicio rețetă.
+      </p>
+    ) : (
+      <div className="flex flex-wrap justify-center gap-6">
+        {recipes.map((recipe) => (
+          <div
+            key={recipe._id}
+            className="w-full sm:w-72 p-4 bg-white border border-gray-200 rounded-2xl shadow-lg dark:bg-gray-800 dark:border-gray-700"
+          >
+            {recipe.imageUrl && (
+              <img
+                src={recipe.imageUrl}
+                alt={recipe.name}
+                className="w-full h-40 object-cover rounded-xl mb-4"
+              />
+            )}
+            <h2 className="text-xl font-semibold text-emerald-700 dark:text-lime-300 mb-2 text-center">
+              {recipe.name}
+            </h2>
+            <p className="text-sm text-gray-700 dark:text-gray-300 mb-1">
+              <strong>Ingrediente:</strong>{" "}
+              {Array.isArray(recipe.ingredients) ? recipe.ingredients.join(", ") : "N/A"}
+            </p>
+            <p className="text-sm text-gray-700 dark:text-gray-300 mb-1">
+              <strong>Durată:</strong> {recipe.duration} min
+            </p>
+            <p className="text-sm text-gray-700 dark:text-gray-300 mb-4">
+              <strong>Calorii:</strong> {recipe.calories} kcal
+            </p>
+            <div className="flex justify-center gap-2">
+              <button
+                onClick={() => handleUpdateRecipe(recipe._id)}
+                className="bg-emerald-500 hover:bg-emerald-600 text-white font-medium rounded-lg px-4 py-1.5 text-sm"
+              >
+                Editează
+              </button>
+              <button
+                onClick={() => handleDeleteRecipe(recipe._id)}
+                className="bg-red-500 hover:bg-red-600 text-white font-medium rounded-lg px-4 py-1.5 text-sm"
+              >
+                Șterge
+              </button>
+            </div>
           </div>
-        </div>
-      ))}
-    </div>
-  );
+        ))}
+      </div>
+    )}
+  </div>
+);
+
 };
 
 export default MainPage;

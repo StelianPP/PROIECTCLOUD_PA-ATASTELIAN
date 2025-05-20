@@ -36,16 +36,16 @@ export const getRecipeById = async (id) => {
     }
 }
 
-export const createRecord = async (record) => {
+export const createRecipe = async (recipe) => {
     try {
-        delete record._id;
+        delete recipe._id;
 
         const response = await fetch("/api/recipes", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify(record),
+            body: JSON.stringify(recipe),
         });
 
         const data = await response.json();
@@ -60,14 +60,14 @@ export const createRecord = async (record) => {
     }
 }
 
-export const updateRecord = async (record) => {
+export const updateRecipe = async (recipe) => {
     try {
         const response = await fetch("/api/recipes", {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify(record),
+            body: JSON.stringify(recipe),
         });
 
         const data = await response.json();
@@ -82,7 +82,7 @@ export const updateRecord = async (record) => {
     }
 }
 
-export const deleteRecord = async (id) => {
+export const deleteRecipe = async (id) => {
     try {
         const response = await fetch(`/api/recipes?id=${id}`, {
             method: "DELETE",
