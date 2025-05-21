@@ -18,8 +18,11 @@ const getRecipe = async (id) => {
 
 const postRecipe = async (recipe) => {
   const collection = await getCollection(COLLECTION_NAME);
-  return collection.insertOne(recipe);
-}
+  const result = await collection.insertOne(recipe);
+  const inserted = await collection.findOne({ _id: result.insertedId });
+  return inserted;
+};
+
 
 const putRecipe = async (recipe) => {
   const collection = await getCollection(COLLECTION_NAME);

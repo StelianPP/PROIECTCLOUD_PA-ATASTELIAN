@@ -77,13 +77,13 @@ const MainPage = () => {
                 onClick={() => handleUpdateRecipe(recipe._id)}
                 className="bg-emerald-500 hover:bg-emerald-600 text-white font-medium rounded-lg px-4 py-1.5 text-sm"
               >
-                Editează
+                Update
               </button>
               <button
                 onClick={() => handleDeleteRecipe(recipe._id)}
                 className="bg-red-500 hover:bg-red-600 text-white font-medium rounded-lg px-4 py-1.5 text-sm"
               >
-                Șterge
+                Delete
               </button>
             </div>
           </div>
