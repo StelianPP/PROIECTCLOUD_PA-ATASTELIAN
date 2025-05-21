@@ -13,7 +13,7 @@ PROIECT CLOUD COMPUTING
 Cadrul didactic coordonator- Lungu Mihai-Adrian
 Student-Pașata Stelian
 Grupa 1134
-LINK YOUTUBE 
+LINK YOUTUBE  https://www.youtube.com/watch?v=jW85HwrI4Ug
 LINK VERCEL  https://proiectcloud-pa-atastelian-l5hw.vercel.app/
 LINK GITHUB  https://github.com/StelianPP/PROIECTCLOUD_PA-ATASTELIAN
 Introducere
